@@ -2,9 +2,9 @@
 Unit 13 Project
 ## Automated ELK Stack Deployment
 
-The files in this repository were used to configure the network diagram located in:
+The files in this repository were used to configure the below network diagram.
 
-**Diagrams/ElkStackDiagram.png**
+![ElkStackDiagram](https://user-images.githubusercontent.com/85187830/133912334-8321b0aa-d59e-4bba-a05d-674dc408444a.png)
 
 An editable draw.io file has also been provided.
 
@@ -54,7 +54,7 @@ A summary of the access policies in place can be found in the table below.
 | Name 	| Publicly Accessible 	| Allowed IP Addresses 	| Allowed Ports 	|
 |---	|---	|---	|---	|
 | Jump-Box-Provisioner 	| Yes 	| 73.202.86.251 	| SSH 22 	|
-| Elk-Server 	| No 	| n/a 	| n/a 	|
+| Elk-Server 	| Yes 	| 73.202.86.251	| 5601 	|
 | Web-1 	| DVWA Web server 	| n/a 	| n/a 	|
 | Web-2 	| DVWA Web server 	| n/a 	| n/a 	|
 
@@ -72,7 +72,8 @@ The ELK playbooks implements the following tasks:
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
-(Images/docker_ps_output.png)
+![docker_ps_output](https://user-images.githubusercontent.com/85187830/133912314-e550c63e-544b-4fc8-ad37-2b7b7eb0eb3f.PNG)
+
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
