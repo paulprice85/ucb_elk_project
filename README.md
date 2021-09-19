@@ -4,7 +4,9 @@ Unit 13 Project
 
 The files in this repository were used to configure the below network diagram.
 
-![ElkStackDiagram](https://user-images.githubusercontent.com/85187830/133912334-8321b0aa-d59e-4bba-a05d-674dc408444a.png)
+![ElkStackDiagram](https://user-images.githubusercontent.com/85187830/133912435-c5063eb2-f2eb-42a3-8de1-ba11dc628d4e.png)
+
+
 
 An editable draw.io file has also been provided.
 
