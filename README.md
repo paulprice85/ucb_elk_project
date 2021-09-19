@@ -79,25 +79,41 @@ The following screenshot displays the result of running `docker ps` after succes
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
-- _TODO: List the IP addresses of the machines you are monitoring_
+
+- Web-1 : 10.0.0.8
+- Web-2 : 10.0.0.7
+
+Both servers are running Ubuntu and Apache Web Services and are primarly functioning as DVWA Web Servers.
 
 We have installed the following Beats on these machines:
-- _TODO: Specify which Beats you successfully installed_
+
+- FileBeats
+- MetricBeats
 
 These Beats allow us to collect the following information from each machine:
-- _TODO: In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
+
+- FileBeats monitors the log files or locations that you specify, collects log events, and forwards them to Logstash (The 'L' in ELK) for indexing.
+
+- MetricBeats collects metrics from the system and services running on the server and forwards them to Logstash.  Apache is an example of one of these services.
+
 
 ### Using the Playbook
-In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
+In order to use the playbook to deploy the ELK stack, you will need to have an Ansible control node already configured and any machines you want to monitor deployed.  You will also need to make sure any network controls allow SSH access to the control node. You may want to restrict this to a specific system (i.e. a JumpBox) and setup a public key for access.  Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
-- Copy the _____ file to _____.
-- Update the _____ file to include...
-- Run the playbook, and navigate to ____ to check that the installation worked as expected.
+- Copy the ansible-config.yml file to /etc/ansible.
+- Update the ansible.cfg file to include **remote_user = AdminUser** (i.e. the admin user you setup on the destination server).  A copy of of our file has been included in this repo as an example.
+- Update the /etc/ansible/host file with a section called [elk].  It should look something like this but with the IP of your destination server.  A copy of our file has been included in this repo.
+    - [elk]
+    - 10.1.0.4 ansible_python_interpreter=/usr/bin/python3
+- Run the playbook (ansible-config.yml), The format for running the playbook is **ansible-playbook ansible-config.yml**, and navigate to http://ElkServerIP:5061 to verify the installation worked as expected.
+- **note** during our setup we found that the Apache install errored out because we already had installed it.  Modifying the section for apache2 to include **state: present** instead of state: absent allowed our playbook to complete successfully.
 
-_TODO: Answer the following questions to fill in the blanks:_
-- _Which file is the playbook? Where do you copy it?_
-- _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
-- _Which URL do you navigate to in order to check that the ELK server is running?
+### Installing FileBeat and MetricBeat on your monitored servers
+Assuming you already have web servers deployed that you want to monitor we have provided two playbooks and config files for installing FileBeat and MetricBeat.
 
-_As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
+- filebeat-config.yml and filebeat-playbook.yml
+- metricbeat-config.yml and metricbeat-playbook.yml
+
+The install is similiar to the Elk install except you must make sure to include your webservers in the [webserver] section of the hosts file.  The two beat playbooks are configured to install to any server in the [webservers] section of the hosts file.  Remember to copy all 4 files to /etc/ansible/ folder on your Ansible control node.
+
